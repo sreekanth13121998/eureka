@@ -62,3 +62,56 @@ nano jenkinsfile
 pwd
 cd j
 ll
+docker --version
+ll
+nano Dockerfile
+nano jenkinsfile
+mvn --version 
+git add .
+git add Dockerfile jenkinsfile
+git init
+git add .
+git add Dockerfile jenkinsfile
+git commit -m "Initial commit"
+git push -u origin main
+git status
+git push -u origin main
+git branch -m main
+git push -u origin main
+git remote add origin https://github.com/sreekanth13121998/eureka.git
+git remote -v
+git push -u origin main
+git pull --rebase origin main
+git push -u origin main
+git push --force origin main
+mvn --version
+docker --version 
+ll
+sudo usermod -aG docker jenkins
+systemctl restart jenkins
+cd /var/lib/jenkins/workspace/eureka-pipeline
+ll
+docker ps
+nano install_sonarqube.sh
+chmod +x install_sonarqube.sh 
+./install_sonarqube.sh 
+systemctl restart jenkins.service 
+cd /var/lib/jenkins/workspace/eureka-pipeline
+ll
+docker pa
+docker ps
+cd 
+ll
+cd /var/lib/jenkins/workspace/eureka-pipeline
+l
+docker ps
+sudo systemctl restart sonarqube
+sudo systemctl status sonarqube
+docker restart sonarqube
+sudo ufw allow 9000/tcp
+cd /var/lib/jenkins/workspace/sonarqube
+ll
+docker ps
+cd 
+sudo su- jenkins
+sudo su - jenkins

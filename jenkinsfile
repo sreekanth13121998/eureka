@@ -2,12 +2,13 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven-3.8.7'  // Ensure this Maven version is configured in Jenkins
+        maven 'Maven'  // Ensure Maven is installed in Jenkins
     }
 
     environment {
         IMAGE_NAME = "eureka-server"
         CONTAINER_NAME = "eureka-server-container"
+        SONARQUBE_URL = "http://18.177.251.181:9000"  // Ensure the URL has "http://"
     }
 
     stages {
@@ -23,6 +24,21 @@ pipeline {
             }
         }
 
+        stage('Static Code Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {  // Ensure this matches Jenkins SonarQube configuration
+                    withCredentials([string(credentialsId: 'sonarqube-jenkins', variable: 'SONARQUBE_TOKEN')]) {
+                        sh '''
+                        mvn org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar \
+                            -Dsonar.projectKey=eureka \
+                            -Dsonar.host.url=$SONARQUBE_URL \
+                            -Dsonar.login=$SONARQUBE_TOKEN
+                        '''
+                    }
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $IMAGE_NAME .'
@@ -32,7 +48,6 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    // Stop and remove existing container if running
                     sh '''
                     docker stop $CONTAINER_NAME || true
                     docker rm $CONTAINER_NAME || true
@@ -46,6 +61,15 @@ pipeline {
             steps {
                 sh 'docker image prune -f'
             }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Build and SonarQube Analysis completed successfully!'
+        }
+        failure {
+            echo '❌ Build or SonarQube Analysis failed! Please check logs.'
         }
     }
 }
