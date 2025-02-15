@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     tools {
+<<<<<<< HEAD
         maven 'Maven'  // Ensure Maven is installed in Jenkins
     }
 
@@ -13,16 +14,28 @@ pipeline {
 
     stages {
         stage('Checkout Code') {
+=======
+        maven 'Maven-3.8.7' // Use the Maven version configured in Jenkins
+    }
+
+    stages {
+        stage('Checkout') {
+>>>>>>> 00c86ed (eurekaserver update)
             steps {
                 git branch: 'main', url: 'https://github.com/sreekanth13121998/eureka.git'
             }
         }
 
+<<<<<<< HEAD
         stage('Build with Maven') {
+=======
+        stage('Build') {
+>>>>>>> 00c86ed (eurekaserver update)
             steps {
                 sh 'mvn clean package -DskipTests'
             }
         }
+<<<<<<< HEAD
 
         stage('Static Code Analysis') {
             steps {
@@ -71,5 +84,7 @@ pipeline {
         failure {
             echo '❌ Build or SonarQube Analysis failed! Please check logs.'
         }
+=======
+>>>>>>> 00c86ed (eurekaserver update)
     }
 }
