@@ -27,7 +27,7 @@ pipeline {
         stage('Static Code Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {  // Ensure this matches Jenkins SonarQube configuration
-                    withCredentials([string(credentialsId: 'sonarqube-jenkins', variable: 'SONARQUBE_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'jenkins', variable: 'SONARQUBE_TOKEN')]) {
                         sh '''
                         mvn org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar \
                             -Dsonar.projectKey=eureka \
